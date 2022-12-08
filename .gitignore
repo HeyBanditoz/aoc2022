@@ -78,3 +78,5 @@ fabric.properties
 
 # Discord rich presence plugin
 .idea/discord.xml
+
+*.txt
