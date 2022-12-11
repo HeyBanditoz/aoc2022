@@ -5,7 +5,7 @@ import java.nio.file.Path;
 public class Day2 {
     public static void main(String[] args) throws IOException {
         System.out.println(Files.readAllLines(Path.of("day2.txt")).stream()
-                .map(Game::new)
+                .map(s -> new Game(s, true))
                 .mapToInt(Game::score)
                 .reduce(Integer::sum)
                 .orElse(0));
@@ -33,13 +33,35 @@ public class Day2 {
     }
 
     static class Game {
-        private final Hand me;
+        private Hand me;
         private final Hand them;
 
-        public Game(String line) {
-            // assuming all the lines are the same
-            me = Hand.of(line.charAt(2));
-            them = Hand.of(line.charAt(0));
+        public Game(String line, boolean lastColumnIndicatesResult) {
+            if (lastColumnIndicatesResult) {
+                Hand me1;
+                // this is kinda hacky
+                them = Hand.of(line.charAt(0));
+                switch (line.charAt(2)) {
+                    case 'X' -> {
+                        if (them == Hand.PAPER) me1 = Hand.ROCK;
+                        else if (them == Hand.ROCK) me1 = Hand.SCISSORS;
+                        else if (them == Hand.SCISSORS) me1 = Hand.PAPER;
+                    }
+                    case 'Y' -> {
+                        me1 = them;
+                    }
+                    case 'Z' -> {
+                        if (them == Hand.PAPER) me1 = Hand.SCISSORS;
+                        else if (them == Hand.ROCK) me1 = Hand.PAPER;
+                        else if (them == Hand.SCISSORS) me1 = Hand.ROCK;
+                    }
+                }
+                // base case, should never be reached
+            } else {
+                // assuming all the lines are the same
+                me = Hand.of(line.charAt(2));
+                them = Hand.of(line.charAt(0));
+            }
         }
 
         public int score() {
