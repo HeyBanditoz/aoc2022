@@ -38,22 +38,21 @@ public class Day2 {
 
         public Game(String line, boolean lastColumnIndicatesResult) {
             if (lastColumnIndicatesResult) {
-                Hand me1;
                 // this is kinda hacky
                 them = Hand.of(line.charAt(0));
                 switch (line.charAt(2)) {
                     case 'X' -> {
-                        if (them == Hand.PAPER) me1 = Hand.ROCK;
-                        else if (them == Hand.ROCK) me1 = Hand.SCISSORS;
-                        else if (them == Hand.SCISSORS) me1 = Hand.PAPER;
+                        if (them == Hand.PAPER) me = Hand.ROCK;
+                        else if (them == Hand.ROCK) me = Hand.SCISSORS;
+                        else if (them == Hand.SCISSORS) me = Hand.PAPER;
                     }
                     case 'Y' -> {
-                        me1 = them;
+                        me = them;
                     }
                     case 'Z' -> {
-                        if (them == Hand.PAPER) me1 = Hand.SCISSORS;
-                        else if (them == Hand.ROCK) me1 = Hand.PAPER;
-                        else if (them == Hand.SCISSORS) me1 = Hand.ROCK;
+                        if (them == Hand.PAPER) me = Hand.SCISSORS;
+                        else if (them == Hand.ROCK) me = Hand.PAPER;
+                        else if (them == Hand.SCISSORS) me = Hand.ROCK;
                     }
                 }
                 // base case, should never be reached
